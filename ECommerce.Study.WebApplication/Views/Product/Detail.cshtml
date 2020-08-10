@@ -1,0 +1,58 @@
+﻿@model ECommerce.Study.WebApplication.Models.ProductDetailViewModel
+@{
+    ViewBag.Title = Model.Product.Name;
+}
+<br />
+
+<h2>Ürün Bilgileri</h2>
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Stok Kodu</label>
+    </div>
+    <div class="col-md-3">
+        @Model.Product.StockCode
+    </div>
+    <div class="col-md-3">
+        <label>Adı</label>
+    </div>
+    <div class="col-md-3">
+        @Model.Product.Name
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Açıklama</label>
+    </div>
+    <div class="col-md-3">
+        @Model.Product.Description
+    </div>
+    <div class="col-md-3">
+        <label>Fiyatı</label>
+    </div>
+    <div class="col-md-3">
+        @Model.Product.Price.ToString()₺
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <label>Stok Adeti</label>
+    </div>
+    <div class="col-md-3">
+        @Model.Product.StockCount.ToString()
+    </div>
+</div>
+<h3>Barcode</h3>
+<div class="row">
+    <div class="col-md-3">
+        <img src="data:image/jpeg;base64,@Model.BarcodeBase64String" />
+    </div>
+</div>
+<br />
+<div class="row">
+    @Html.ActionLink("Listelemeye Dön", "Index", "Product", null, new { @class = "btn btn-primary btn-lg active", @role = "button" })
+    @Html.ActionLink("Güncelle", "Update", "Product", new { stockCode = Model.Product.StockCode }, new { @class = "btn btn-success btn-lg active", @role = "button" })
+    <a href="#" class="btn btn-danger btn-lg active" role="button" onclick="deleteProduct('@(Model.Product.StockCode)')">Sil</a>
+</div>

@@ -1,0 +1,58 @@
+﻿@model ECommerce.Study.WebApplication.Models.ProductIndexViewModel
+@{
+    ViewBag.Title = "Ürünler";
+}
+
+@if (Model != null && Model.Products != null && Model.Products.Count > 0)
+{
+    <h2>Ürünler</h2>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>#</th>
+                <th scope="col">Stok Kodu</th>
+                <th scope="col">Adı</th>
+                <th scope="col">Açıklama</th>
+                <th scope="col">Fiyat</th>
+                <th scope="col">Stok Adedi</th>
+                @if (ViewBag.IsLogged)
+                {
+                    <th></th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Products.Count; i++)
+            {
+                <tr>
+                    <th scope="row">@(i + 1)</th>
+                    <td>@Model.Products[i].StockCode</td>
+                    <td>@Model.Products[i].Name</td>
+                    <td>@Model.Products[i].Description</td>
+                    <td>@Model.Products[i].Price.ToString()</td>
+                    <td>@Model.Products[i].StockCount.ToString()</td>
+                    @if (ViewBag.IsLogged)
+                    {
+                        <td>
+                            @Html.ActionLink("Detay", "Detail", "Product", new { stockCode = Model.Products[i].StockCode }, new { @class = "btn btn-primary btn-lg active", @role = "button" })
+                            @Html.ActionLink("Güncelle", "Update", "Product", new { stockCode = Model.Products[i].StockCode }, new { @class = "btn btn-success btn-lg active", @role = "button" })
+                            <a href="#" class="btn btn-danger btn-lg active" role="button" onclick="deleteProduct('@(Model.Products[i].StockCode)')">Sil</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <br />
+    <div class="alert alert-warning" role="alert">
+        Ürün Bulunamadı!
+    </div>
+}
+@if (ViewBag.IsLogged)
+{
+    @Html.ActionLink("Yeni Ürün Ekle", "Add", "Product", null, new { @class = "btn btn-success btn-lg active", @role = "button" })
+}
+

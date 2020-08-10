@@ -1,0 +1,53 @@
+﻿@model ECommerce.Study.WebApplication.Models.ProductAddViewModel
+@{
+    ViewBag.Title = "Ürün" + (ViewBag.IsAddOrUpdate ? "Ekle" : "Güncelle");
+}
+<h2>Ürün @(ViewBag.IsAddOrUpdate ? "Ekle" : "Güncelle")</h2>
+
+<form action="@(ViewBag.IsAddOrUpdate ? "Add" : "Update")"  method="post">
+
+    @if (Model != null && Model.Errors != null && Model.Errors.Any())
+    {
+        <div class="alert alert-danger" role="alert">
+            @foreach (string error in Model.Errors)
+            {
+                <div>@error</div>
+            }
+        </div>
+    }
+    else if (Model != null && Model.Success)
+    {
+        <div class="success alert-success" role="alert">
+            Ürün Başarıyla @(ViewBag.IsAddOrUpdate ? "eklendi" : "güncellendi").
+        </div>
+    }
+
+    <div class="form-group">
+        <label for="StockCode">Stok Kodu</label>
+        <input type="text" class="form-control" id="StockCode" name="StockCode" @(ViewBag.IsAddOrUpdate ? string.Empty : "readonly" ) value="@(Model != null ? Model.Product.StockCode : string.Empty)">
+    </div>
+    <div class="form-group">
+        <label for="Name">Adı</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@(Model != null ? Model.Product.Name : string.Empty)">
+    </div>
+    <div class="form-group">
+        <label for="Description">Açıklama</label>
+        <input type="text" class="form-control" id="Description" name="Description" value="@(Model != null ? Model.Product.Description : string.Empty)">
+    </div>
+    <div class="form-group">
+        <label for="Price">Fiyat</label>
+        <input type="text" class="form-control" id="Price" name="Price" value="@(Model != null ? Model.Product.Price.ToString() : string.Empty)">
+    </div>
+    <div class="form-group">
+        <label for="StockCount">Stok Adedi</label>
+        <input type="number" class="form-control" id="StockCount" name="StockCount" value="@(Model != null ? Model.Product.StockCount.ToString() : string.Empty)">
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            <button type="submit" class="btn btn-primary">@(ViewBag.IsAddOrUpdate ? "Ekle" : "Güncelle")</button>
+        </div>
+        <div class="col-sm-1">
+            @Html.ActionLink("Listelemeye Dön", "Index", "Product", null, new { @class = "btn btn-primary active", @role = "button" })
+        </div>
+    </div>
+</form>
